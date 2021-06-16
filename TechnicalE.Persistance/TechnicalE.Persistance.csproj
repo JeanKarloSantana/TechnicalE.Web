@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TechnicalE.Entities\TechnicalE.Entities.csproj" />
+    <ProjectReference Include="..\TechnicalE.Interfaces\TechnicalE.Interfaces.csproj" />
+    <ProjectReference Include="..\TechnicalE.DAL\TechnicalE.DAL.csproj" />
+  </ItemGroup>
+  
+
+</Project>

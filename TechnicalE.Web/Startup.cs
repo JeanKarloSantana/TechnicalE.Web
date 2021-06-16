@@ -1,12 +1,14 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using TechnicalE.DAL.SQL;
 
 namespace TechnicalE.Web
 {
@@ -16,6 +18,15 @@ namespace TechnicalE.Web
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<TechnicalEvDbContext>(options => options
+                .UseSqlServer(("Name=TechnicalEvDbContext")));
+
+            services.AddCors();
+            services.AddControllers();
+
+            services.AddMvc().AddJsonOptions(options =>
+                options.JsonSerializerOptions.PropertyNamingPolicy = null
+            );
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -27,6 +38,10 @@ namespace TechnicalE.Web
             }
 
             app.UseRouting();
+
+            app.UseCors(options =>
+                options.SetIsOriginAllowed(x => _ = true).AllowAnyMethod().AllowAnyHeader().AllowCredentials()
+            );
 
             app.UseEndpoints(endpoints =>
             {
