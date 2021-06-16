@@ -9,6 +9,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TechnicalE.DAL.SQL;
+using TechnicalE.Domain.ExchangeRatesManager;
+using TechnicalE.Interfaces;
+using TechnicalE.Interfaces.Generic;
+using TechnicalE.Interfaces.Services;
+using TechnicalE.Persistance.Generic;
+using TechnicalE.Services;
+using TechnicalE.Services.FormatNumbers;
 
 namespace TechnicalE.Web
 {
@@ -20,6 +27,12 @@ namespace TechnicalE.Web
         {
             services.AddDbContext<TechnicalEvDbContext>(options => options
                 .UseSqlServer(("Name=TechnicalEvDbContext")));
+
+            services.AddTransient<IUnitOfWork, UnitOfWork>();            
+            services.AddTransient<IExchangeRateService, ExchangeRateService>();
+            services.AddTransient<IExchangeRateManager, ExchangeRateManager>();
+            services.AddTransient<IFormatNumbers, FormatNumbers>();
+            services.AddTransient<IErrorMessageService, ErrorMessageService>();
 
             services.AddCors();
             services.AddControllers();
@@ -42,14 +55,14 @@ namespace TechnicalE.Web
             app.UseCors(options =>
                 options.SetIsOriginAllowed(x => _ = true).AllowAnyMethod().AllowAnyHeader().AllowCredentials()
             );
-
+            
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapGet("/", async context =>
-                {
-                    await context.Response.WriteAsync("Hello World!");
-                });
+                endpoints.MapControllers();
             });
+            
+            
+            
         }
     }
 }

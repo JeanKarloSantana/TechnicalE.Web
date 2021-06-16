@@ -1,7 +1,17 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="RestSharp" Version="106.11.7" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TechnicalE.Entities\TechnicalE.Entities.csproj" />
+    <ProjectReference Include="..\TechnicalE.Interfaces\TechnicalE.Interfaces.csproj" />    
+    <ProjectReference Include="..\TechnicalE.Domain\TechnicalE.Domain.csproj" />    
+  </ItemGroup>
 
 </Project>

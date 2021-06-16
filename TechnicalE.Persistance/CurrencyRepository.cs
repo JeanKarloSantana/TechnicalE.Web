@@ -1,6 +1,9 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using TechnicalE.DAL.SQL;
 using TechnicalE.Entities;
 using TechnicalE.Interfaces;
@@ -14,6 +17,11 @@ namespace TechnicalE.Persistance
 
         public CurrencyRepository(TechnicalEvDbContext dbContext) : base(dbContext)
         {
-        }     
+        }
+
+        public async Task<int> GetCurrencyIdByIsoCode(string code) => await context.Currency
+            .Where(c => c.Country.ISOCode == code.ToUpper())
+            .Select(c => c.Id)
+            .FirstOrDefaultAsync();
     }
 }
