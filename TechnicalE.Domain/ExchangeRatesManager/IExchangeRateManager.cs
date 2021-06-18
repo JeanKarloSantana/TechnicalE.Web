@@ -10,5 +10,6 @@ namespace TechnicalE.Domain.ExchangeRatesManager
     public interface IExchangeRateManager
     {
         Task<ResponseDTO<RatesDTO>> ExchangeRateHandler(string code);
+        Task<ResponseDTO<RatesDTO>> UpdateRates();
     }
 }

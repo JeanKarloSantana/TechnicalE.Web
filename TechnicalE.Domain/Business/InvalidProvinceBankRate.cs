@@ -7,14 +7,14 @@ using TechnicalE.Entities.DTO;
 
 namespace TechnicalE.Domain.Business
 {
-    public class BrlProvinceBankRate : RatesDTO
+    public class InvalidProvinceBankRate : RatesDTO
     {
-        public BrlProvinceBankRate(RatesDTO rates)
+        public InvalidProvinceBankRate(RatesDTO rates)
         {
-            Buy = rates.Buy / 4;
-            Sell = rates.Sell / 4;            
+            Buy = rates.Buy;
+            Sell = rates.Sell;            
             Updated = rates.Updated;
-            Validation = true;
+            Validation = false;
         }
-    }
+    }    
 }

@@ -19,9 +19,19 @@ namespace TechnicalE.Persistance
         {
         }
 
-        public async Task<int> GetCurrencyIdByIsoCode(string code) => await context.Currency
-            .Where(c => c.Country.ISOCode == code.ToUpper())
+        public async Task<int> GetCurrencyIdByIsoCode(string IsoCode) => await context.Currency
+            .Where(c => c.Country.ISOCode == IsoCode.ToUpper())
             .Select(c => c.Id)
+            .FirstOrDefaultAsync();
+        
+        public async Task<int> GetCurrencyIdByCode(string code) => await context.Currency
+            .Where(c => c.Code == code.ToUpper())
+            .Select(c => c.Id)
+            .FirstOrDefaultAsync();
+
+        public async Task<string> GetCurrencyNameByCode(string code) => await context.Currency
+            .Where(c => c.Code == code.ToUpper())
+            .Select(c => c.Name)
             .FirstOrDefaultAsync();
     }
 }

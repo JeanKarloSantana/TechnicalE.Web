@@ -9,7 +9,7 @@ namespace TechnicalE.Entities.DTO
     public class PurchaseDTO
     {
         public int IdUser { get; set; }
-        public string IsoCode { get; set; }
-        public decimal PurchasedAmount { get; set; }
+        public string Code { get; set; }
+        public decimal Amount { get; set; }
     }
 }

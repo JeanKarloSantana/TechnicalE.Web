@@ -10,11 +10,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using TechnicalE.DAL.SQL;
 using TechnicalE.Domain.ExchangeRatesManager;
+using TechnicalE.Domain.PurchaseTransactionManager;
 using TechnicalE.Interfaces;
 using TechnicalE.Interfaces.Generic;
 using TechnicalE.Interfaces.Services;
 using TechnicalE.Persistance.Generic;
 using TechnicalE.Services;
+using TechnicalE.Services.ExchangeRate;
 using TechnicalE.Services.FormatNumbers;
 
 namespace TechnicalE.Web
@@ -33,6 +35,8 @@ namespace TechnicalE.Web
             services.AddTransient<IExchangeRateManager, ExchangeRateManager>();
             services.AddTransient<IFormatNumbers, FormatNumbers>();
             services.AddTransient<IErrorMessageService, ErrorMessageService>();
+            services.AddTransient<IPurchaseTransactionManager, PurchaseTransactionManager>();
+            services.AddTransient<IRateConversionService, RateConversionService>();
 
             services.AddCors();
             services.AddControllers();

@@ -12,9 +12,9 @@ namespace TechnicalE.Domain.Business
         public UsdProvinceBankRate(RatesDTO rates)
         {
             Buy = rates.Buy;
-            Sell = rates.Sell;
-            Rate = 1 / rates.Sell;
+            Sell = rates.Sell;            
             Updated = rates.Updated;
+            Validation = true;
         }
     }
 }

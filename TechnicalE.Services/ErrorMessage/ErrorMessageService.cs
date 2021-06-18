@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TechnicalE.Entities;
 using TechnicalE.Entities.DTO;
 using TechnicalE.Interfaces.Services;
 
@@ -11,8 +12,7 @@ namespace TechnicalE.Services
     public class ErrorMessageService : IErrorMessageService
     {
         public ErrorMessageService()
-        {
-
+        {            
         }
 
         public ResponseDTO<RatesDTO> UnableRetrieveRateDataFromApi(ResponseDTO<RatesDTO> response, string requestStatus)
@@ -28,6 +28,28 @@ namespace TechnicalE.Services
             response.Errors.Add(code.ToUpper() + " Is not a valid currency, Please provide a different currency");
             response.Succeeded = false;
             response.StatusCode = 400;
+            return response;
+        }        
+
+        public ResponseDTO<RatesDTO> UpdateCurrenciesRates(ResponseDTO<RatesDTO> response) 
+        { 
+            response.Message = "All currencies rates has been updated";
+            response.StatusCode = 200;
+            return response;
+        }
+
+        public ResponseDTO<PurchaseTransaction> PurchaseTransaction(ResponseDTO<PurchaseTransaction> response, string currencyName)
+        {
+            response.StatusCode = 201;
+            response.Message = $"The transaction was completed successfully for a purchase of { response.Data.PurchasedAmount } { currencyName } at rate { response.Data.SellRateLog }";
+            return response;
+        }
+
+        public ResponseDTO<PurchaseTransaction> PurchaseLimitReached(ResponseDTO<PurchaseTransaction> response)
+        {
+            response.StatusCode = 500;
+            response.Errors.Add($"This user surpassed the monthly limit");
+            response.Succeeded = false;
             return response;
         }
     }

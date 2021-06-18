@@ -12,9 +12,11 @@ namespace TechnicalE.Interfaces.Generic
         TEntity Get(int id);
         IEnumerable<TEntity> GetAll();
         IEnumerable<TEntity> GetAll(Expression<Func<TEntity, bool>> predicate);
+        Task<IEnumerable<TEntity>> GetAllAsync();
         Task<TEntity> GetAsync(Expression<Func<TEntity, bool>> predicate);
         Task<TEntity> GetAsync(int id);
         void Add(TEntity entity);
         void AddAll(IEnumerable<TEntity> entities);
+       
     }
 }

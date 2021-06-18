@@ -10,8 +10,7 @@ namespace TechnicalE.Entities
         public int IdFromCurrency { get; set; }
         public int IdToCurrency { get; set; }
         public decimal Buy { get; set; }
-        public decimal Sell { get; set; }
-        public decimal Rate { get; set; }
+        public decimal Sell { get; set; }        
         public DateTime Update { get; set; }
         public Currency CurrencyFrom { get; set; }
         public Currency CurrencyTo { get; set; }

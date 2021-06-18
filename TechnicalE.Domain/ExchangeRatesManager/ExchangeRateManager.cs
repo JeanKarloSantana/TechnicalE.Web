@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TechnicalE.Entities;
 using TechnicalE.Entities.DTO;
 using TechnicalE.Entities.Enums;
 using TechnicalE.Interfaces;
@@ -59,12 +60,34 @@ namespace TechnicalE.Domain.ExchangeRatesManager
         }
 
         private RatesDTO FormatProvinceBankRates(RatesDTO responseData)
-        {
-            responseData.Rate = _formatNumbers.FormatDecimalFourDigits(responseData.Rate);
+        {            
             responseData.Buy = _formatNumbers.FormatDecimalTwoDigits(responseData.Buy);
             responseData.Sell = _formatNumbers.FormatDecimalTwoDigits(responseData.Sell);
 
             return responseData;
+        }
+
+        public async Task<ResponseDTO<RatesDTO>> UpdateRates()
+        {
+            IEnumerable<Currency> currencies = await _unitOfWork.Currencies.GetAllAsync();
+            
+            ResponseDTO<RatesDTO> response = _exchangeRate.GetApiRateForUpdate();
+
+            foreach (Currency currency in currencies)
+            {
+                response.Data = _exchangeRate.GetCurrencyRate(currency.Id, response.Data);
+
+                if (response.Data.Validation)
+                {
+                    ExchangeRate newExchangeRate = _unitOfWork.ExchangeRates.CreateExchangeRate(response.Data, currency.Id);
+                    _unitOfWork.ExchangeRates.AddOrUpdateRate(newExchangeRate);
+                }
+
+                if (!response.Succeeded)
+                    return response;                    
+            }
+            
+            return _errorMessage.UpdateCurrenciesRates(response);
         }
     }
 }

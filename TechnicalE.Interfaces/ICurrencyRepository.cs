@@ -10,5 +10,7 @@ namespace TechnicalE.Interfaces
     public interface ICurrencyRepository : IBaseRepository<Currency>
     {
         Task<int> GetCurrencyIdByIsoCode(string code);
+        Task<int> GetCurrencyIdByCode(string code);
+        Task<string> GetCurrencyNameByCode(string code);
     }
 }

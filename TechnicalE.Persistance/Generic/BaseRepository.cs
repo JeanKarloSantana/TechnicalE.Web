@@ -40,6 +40,11 @@ namespace TechnicalE.Persistance.Generic
             return context.Set<TEntity>().ToList();
         }
 
+        public async virtual Task<IEnumerable<TEntity>> GetAllAsync()
+        {
+            return await context.Set<TEntity>().ToListAsync();
+        }
+
         public virtual IEnumerable<TEntity> GetAll(Expression<Func<TEntity, bool>> predicate)
         {
             return context.Set<TEntity>().Where(predicate).ToList();

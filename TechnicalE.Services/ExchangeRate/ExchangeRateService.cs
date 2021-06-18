@@ -84,12 +84,32 @@ namespace TechnicalE.Services
             return rates;
         }
 
-        private RatesDTO GetCurrencyRate(int idCurrency, RatesDTO rates) =>
+        public RatesDTO GetCurrencyRate(int idCurrency, RatesDTO rates) =>
             idCurrency switch
             {
                 (int)CurrencyCodeEnum.USD => new UsdProvinceBankRate(rates),
                 (int)CurrencyCodeEnum.BRL => new BrlProvinceBankRate(rates),
-                _ => rates = null
-            };
+                _ => new InvalidProvinceBankRate(rates)
+            };        
+
+        public ResponseDTO<RatesDTO> GetApiRateForUpdate()
+        {
+            var response = new ResponseDTO<RatesDTO>();
+
+            IRestResponse apiResponse = GetProvinceBankApiResponse();
+
+            if (!apiResponse.IsSuccessful)
+            {
+                var errors = new ErrorMessageService();
+
+                return errors.UnableRetrieveRateDataFromApi(response, apiResponse.StatusCode.ToString());
+            }
+
+            response.Data = new RatesDTO();
+
+            response.Data = FormatProvinceBankResponse(apiResponse.Content, response.Data);            
+
+            return response;
+        }
     }
 }
