@@ -9,8 +9,7 @@ namespace TechnicalE.Interfaces
 {
     public interface IExchangeRateService
     {
-        ResponseDTO<RatesDTO> GetProvinceBankApiRate(int idCurrency);
-        RatesDTO GetCurrencyRate(int idCurrency, RatesDTO rates);
-        ResponseDTO<RatesDTO> GetApiRateForUpdate();        
+        ResponseDTO<RatesDTO> GetProvinceBankApiRate(string url);       
+        ResponseDTO<RatesDTO> GetApiRateForUpdate(string url);        
     }
 }

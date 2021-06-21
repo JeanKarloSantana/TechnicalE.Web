@@ -14,7 +14,7 @@ namespace TechnicalE.Services.FormatNumbers
             string format = String.Format("{0:0.0000}", number).ToString();
             return decimal.Parse(format);
         }
-
+        
         public decimal FormatDecimalTwoDigits(decimal number)
         {
             string format = String.Format("{0:0.00}", number).ToString();

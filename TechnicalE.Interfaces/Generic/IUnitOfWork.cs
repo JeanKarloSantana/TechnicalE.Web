@@ -13,6 +13,6 @@ namespace TechnicalE.Interfaces.Generic
         public IExchangeRateRepository ExchangeRates { get; set; }       
         public IPersonRepository Person { get; set; }
         public IUserRepository Users { get; set; }
-        public IPurchaseTransactionRepository PurchaseTransactions { get; set; }
+        public IPurchaseTransactionRepository PurchaseTransactions { get; set; }       
     }
 }

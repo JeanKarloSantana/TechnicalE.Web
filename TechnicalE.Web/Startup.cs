@@ -9,8 +9,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TechnicalE.DAL.SQL;
+using TechnicalE.Domain.Business;
+using TechnicalE.Domain.ComboxManager;
 using TechnicalE.Domain.ExchangeRatesManager;
 using TechnicalE.Domain.PurchaseTransactionManager;
+using TechnicalE.Domain.ValidatorManager;
+using TechnicalE.Domain.ValidatosManager;
 using TechnicalE.Interfaces;
 using TechnicalE.Interfaces.Generic;
 using TechnicalE.Interfaces.Services;
@@ -34,9 +38,12 @@ namespace TechnicalE.Web
             services.AddTransient<IExchangeRateService, ExchangeRateService>();
             services.AddTransient<IExchangeRateManager, ExchangeRateManager>();
             services.AddTransient<IFormatNumbers, FormatNumbers>();
-            services.AddTransient<IErrorMessageService, ErrorMessageService>();
+            services.AddTransient<IMessagesService, MessagesService>();
             services.AddTransient<IPurchaseTransactionManager, PurchaseTransactionManager>();
             services.AddTransient<IRateConversionService, RateConversionService>();
+            services.AddTransient<IComboxManager, ComboxManager>();
+            services.AddTransient<IProvinceBankRate, ProvinceBankRate>();
+            services.AddTransient<IValidationManager, ValidationManager>();
 
             services.AddCors();
             services.AddControllers();
@@ -63,10 +70,7 @@ namespace TechnicalE.Web
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-            });
-            
-            
-            
+            });            
         }
     }
 }

@@ -9,9 +9,9 @@ using TechnicalE.Interfaces.Services;
 
 namespace TechnicalE.Services
 {
-    public class ErrorMessageService : IErrorMessageService
+    public class MessagesService : IMessagesService
     {
-        public ErrorMessageService()
+        public MessagesService()
         {            
         }
 
@@ -48,8 +48,16 @@ namespace TechnicalE.Services
         public ResponseDTO<PurchaseTransaction> PurchaseLimitReached(ResponseDTO<PurchaseTransaction> response)
         {
             response.StatusCode = 500;
-            response.Errors.Add($"This user surpassed the monthly limit");
+            response.Errors.Add($"Cannot proceed with the transaction because will surpass this user monthly limit");
             response.Succeeded = false;
+            return response;
+        }
+
+        public ResponseDTO<PurchaseTransaction> CurrencyNotAvailable(ResponseDTO<PurchaseTransaction> response, string code)
+        {
+            response.Errors.Add(code.ToUpper() + " Is not available for exchange, Please provide a different currency");
+            response.Succeeded = false;
+            response.StatusCode = 400;
             return response;
         }
     }

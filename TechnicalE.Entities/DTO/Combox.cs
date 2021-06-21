@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TechnicalE.Domain.Business
+namespace TechnicalE.Entities.DTO
 {
-    public class RateConversion
+    public class Combox
     {
-
+        public int Id { get; set; }
+        public string Name { get; set; }
     }
 }

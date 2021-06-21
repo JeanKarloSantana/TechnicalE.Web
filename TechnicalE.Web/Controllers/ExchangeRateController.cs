@@ -52,12 +52,13 @@ namespace TechnicalE.Web.Controllers
             {
                 var response = new ResponseDTO<RatesDTO>();
 
-                response = await _exchangeRate.UpdateRates();
+                response = await _exchangeRate.UpdateRates();                
 
-                _unitOfWork.Complete();
-
-                if (response.Succeeded) 
+                if (response.Succeeded)
+                {
+                    _unitOfWork.Complete();
                     return StatusCode(response.StatusCode, response.Message);
+                }                    
 
                 return StatusCode(response.StatusCode, response.Errors);
             }
@@ -66,5 +67,34 @@ namespace TechnicalE.Web.Controllers
                 return StatusCode(500, err.Message);
             }
         }
+
+        [HttpGet]
+        [Route("GetAll")]
+        public async Task<IActionResult> GetAll()
+        {
+            try
+            {
+                return StatusCode(200, await _unitOfWork.ExchangeRates.GetAllExchangeRate());
+            }
+            catch (Exception err)
+            {
+                return StatusCode(500, err.Message);
+            }
+        }
+
+        [HttpGet]
+        [Route("GetRateFormatted")]
+        public async Task<IActionResult> GetRateFormatted()
+        {
+            try
+            {
+                return StatusCode(200, await _unitOfWork.ExchangeRates.GetRateForExTable());
+            }
+            catch (Exception err)
+            {
+                return StatusCode(500, err.Message);
+            }
+        }
+
     }
 }

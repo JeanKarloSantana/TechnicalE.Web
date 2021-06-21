@@ -14,7 +14,7 @@ namespace TechnicalE.Entities.Validators
         {
             RuleFor(x => x)
                 .Must(y => y.IdUser > 0)
-                .WithMessage("Your request does not have an Id user, please provide an Id User");
+                .WithMessage("Your request does not have an Id user, Please provide an Id User");
 
             RuleFor(x => x.Code).NotNull()
                 .WithMessage("Your request does not have a currency Code, Please provide a currency code");

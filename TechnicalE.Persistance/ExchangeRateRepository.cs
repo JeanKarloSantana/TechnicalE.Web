@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -74,6 +75,27 @@ namespace TechnicalE.Persistance
             rateToUpdate.Buy = newRateData.Buy;
             rateToUpdate.Sell = newRateData.Sell;
             rateToUpdate.Update = Convert.ToDateTime(newRateData.Update);
-        } 
+        }
+
+        public async Task<dynamic> GetAllExchangeRate() => await context.ExchangeRate
+            .Select(e => new 
+            {
+                e.Id,
+                e.IdFromCurrency,
+                e.IdToCurrency,
+                e.Sell,
+                e.Buy,
+                e.Update
+            }).ToListAsync();
+
+        public async Task<dynamic> GetRateForExTable() => await context.ExchangeRate
+            .Select(e => new
+            {
+                CurrencyTo = e.CurrencyTo.Code,
+                e.Buy,
+                e.Sell,                
+                e.Update
+            }).ToListAsync();
+
     }
 }

@@ -4,11 +4,14 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 using TechnicalE.Domain.PurchaseTransactionManager;
+using TechnicalE.Domain.ValidatorManager;
 using TechnicalE.Entities;
 using TechnicalE.Entities.DTO;
 using TechnicalE.Entities.Validators;
+using TechnicalE.Interfaces.Generic;
 
 namespace TechnicalE.Web.Controllers
 {
@@ -17,9 +20,15 @@ namespace TechnicalE.Web.Controllers
     public class TransactionController : ControllerBase
     {
         private readonly IPurchaseTransactionManager _purchaseManager;
-        public TransactionController(IPurchaseTransactionManager purchaseManager) 
+        private readonly IValidationManager _validationManager;
+        private readonly IUnitOfWork _unitOfWork;
+        public TransactionController(IPurchaseTransactionManager purchaseManager, 
+            IValidationManager validationManager,
+            IUnitOfWork unitOfWork) 
         {
             _purchaseManager = purchaseManager;
+            _validationManager = validationManager;
+            _unitOfWork = unitOfWork;
         }
 
         [HttpPost]
@@ -28,22 +37,19 @@ namespace TechnicalE.Web.Controllers
         {
             try
             {
-                var validator = new PurchaseDTOValidator();
+                ValidationResult validationResult = _validationManager.ValidatePurchaseDto(purchase);
                 
-                ValidationResult all = validator.Validate(purchase);
-                
-                List<string> errors = new List<string>();
-                    
-                all.Errors.ForEach(t => errors.Add(t.ErrorMessage));
-                
-                if (!all.IsValid) return StatusCode(500, errors);                 
+                if (!validationResult.IsValid) return StatusCode(500, JsonSerializer.Serialize(validationResult.Errors));
 
                 ResponseDTO<PurchaseTransaction> response = await _purchaseManager.CurrencyPurchaseHandler(purchase);
 
                 if (response.Succeeded)
-                    return StatusCode(response.StatusCode, response.Message);
+                {
+                    _unitOfWork.Complete();
+                    return StatusCode(response.StatusCode, JsonSerializer.Serialize(response.Message));
+                }
 
-               return StatusCode(response.StatusCode, response.Errors);
+                return StatusCode(response.StatusCode, JsonSerializer.Serialize(response.Errors));
 
             }
             catch (Exception e)
