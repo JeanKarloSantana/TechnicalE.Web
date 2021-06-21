@@ -4,7 +4,7 @@ Technical evaluation in .Net
 Language: C#
 Framework: .Net5
 
-In the email I send to the recruiter I included 2 file with the database script with the structure and another with the data.
+In the email I send to the recruiter I included 2 file with the database script with the structure and another with the data, I also uploaded those files in this project.
 
 The api has the two main endpoints: 
 
