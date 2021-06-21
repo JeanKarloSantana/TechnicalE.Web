@@ -10,6 +10,6 @@ namespace TechnicalE.Domain.ValidatorManager
 {
     public interface IValidationManager
     {
-        ValidationResult ValidatePurchaseDto(PurchaseDTO purchase);
+        List<string> ValidatePurchaseDto(PurchaseDTO purchase);
     }
 }

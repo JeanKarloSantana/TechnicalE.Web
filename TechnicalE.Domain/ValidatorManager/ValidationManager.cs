@@ -13,7 +13,7 @@ namespace TechnicalE.Domain.ValidatosManager
     public class ValidationManager : IValidationManager
     {
         //This method is the data receive from a the request is valid
-        public ValidationResult ValidatePurchaseDto(PurchaseDTO purchase) 
+        public List<string> ValidatePurchaseDto(PurchaseDTO purchase) 
         {
             var validator = new PurchaseDTOValidator();
 
@@ -23,7 +23,7 @@ namespace TechnicalE.Domain.ValidatosManager
 
             validationResult.Errors.ForEach(err => errors.Add(err.ErrorMessage));
 
-            return validationResult;
+            return errors;
         }
     }
 }

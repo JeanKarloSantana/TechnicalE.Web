@@ -37,9 +37,9 @@ namespace TechnicalE.Web.Controllers
         {
             try
             {
-                ValidationResult validationResult = _validationManager.ValidatePurchaseDto(purchase);
+                List<string> errorsResult = _validationManager.ValidatePurchaseDto(purchase);
                 
-                if (!validationResult.IsValid) return StatusCode(500, JsonSerializer.Serialize(validationResult.Errors));
+                if (errorsResult.Count > 0) return StatusCode(500, JsonSerializer.Serialize(errorsResult));
 
                 ResponseDTO<PurchaseTransaction> response = await _purchaseManager.CurrencyPurchaseHandler(purchase);
 
