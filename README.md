@@ -9,7 +9,7 @@ In the email I send to the recruiter I included 2 file with the database script 
 The api has the two main endpoints: 
 
 1. https://localhost:44303/api/ExchangeRate/{IsoCode} 
-this will retrieve the exchange rate for the available currencies send as parameter the country iso code for example https://localhost:44303/api/ExchangeRate/US
+this will retrieve the exchange rate for the available currencies by sending as parameter the country iso code for example https://localhost:44303/api/ExchangeRate/US
 
 2. https://localhost:44303/api/Transaction/Purchase
 this one need to send an object in order to make a transaction for example:
